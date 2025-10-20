@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-br">
+<head><meta charset="utf-8"><title>Loja (AJAX)</title></head>
+<body>
+  <h1>Lista via AJAX</h1>
+  <button id="btn">Carregar produtos</button>
+  <ul id="lista"></ul>
+  <a href="/">voltar</a>
+
+  <script>
+    document.getElementById('btn').onclick = () => {
+      fetch('api/produtos.php')           // relativo à mesma origem
+        .then(r => r.json())
+        .then(items => {
+          const ul = document.getElementById('lista');
+          ul.innerHTML = items.map(p =>
+            `<li><strong>${p.nome}</strong> — R$ ${Number(p.preco).toFixed(2)}</li>`
+          ).join('');
+        })
+        .catch(console.error);
+    };
+  </script>
+</body>
+</html>
